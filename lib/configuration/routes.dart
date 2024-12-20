@@ -13,11 +13,7 @@ class ApplicationRoutes {
   static const logout = '/logout';
   static const register = '/register';
   static const settings = '/settings';
-  static const forgotPassword = '/forgot-password';
-  static const changePassword = '/settings/change-password';
   static const account = '/account';
-  static const createUser = '/admin/new-user';
-  static const listUsers = '/admin/list-users';
 }
 
 String initialRouteControl() {

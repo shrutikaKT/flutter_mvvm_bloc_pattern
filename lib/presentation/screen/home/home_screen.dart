@@ -1,7 +1,5 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/configuration/constants.dart';
 import 'package:flutter_bloc_advance/utils/app_constants.dart';
 
 import '../../../configuration/routes.dart';
@@ -35,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(title: const Text(AppConstants.appName)),
               key: _scaffoldKey,
-              body: Center(child: Column(children: [backgroundImage(context)])),
+              body: const Center(child: Column(children: [])),
               drawer: _buildDrawer(context),
             );
           }
@@ -43,41 +41,6 @@ class HomeScreen extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Widget backgroundImage(BuildContext context) {
-    // dark or light mode row decoration
-    if (Theme.of(context).brightness == Brightness.dark) {
-      return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(200),
-          child: Container(
-            height: 300,
-            width: 300,
-            decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage(LocaleConstants.logoLightUrl), scale: 1, fit: BoxFit.contain),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage(LocaleConstants.defaultImgUrl),
-                colorFilter: ColorFilter.mode(
-                    AdaptiveTheme.of(context).mode.isDark ? Colors.black.withOpacity(0.1) : Colors.white.withOpacity(0.1), BlendMode.dstIn),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
   }
 
   _buildDrawer(BuildContext context) {

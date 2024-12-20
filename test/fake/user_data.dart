@@ -1,5 +1,3 @@
-import 'package:flutter_bloc_advance/data/models/authority.dart';
-import 'package:flutter_bloc_advance/data/models/change_password.dart';
 import 'package:flutter_bloc_advance/data/models/jwt_token.dart';
 import 'package:flutter_bloc_advance/data/models/menu.dart';
 import 'package:flutter_bloc_advance/data/models/user.dart';
@@ -22,12 +20,6 @@ final mockUserFullPayload = User(
   lastModifiedDate: createdDate,
   authorities: const ['ROLE_USER'],
 );
-
-/// Authority(Role) fake data
-const mockAuthorityPayload = Authority(name: 'ROLE_USER');
-
-/// PasswordChange fake data with full payload
-const mockPasswordChangePayload = PasswordChangeDTO(currentPassword: 'password', newPassword: 'new_password');
 
 /// JWTToken fake data
 const mockJWTTokenPayload = JWTToken(idToken: 'MOCK_TOKEN');

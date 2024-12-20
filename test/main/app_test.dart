@@ -62,11 +62,7 @@ void main() {
       expect(app.initialRoutes.containsKey(ApplicationRoutes.login), true);
       expect(app.initialRoutes.containsKey(ApplicationRoutes.account), true);
       expect(app.initialRoutes.containsKey(ApplicationRoutes.settings), true);
-      expect(app.initialRoutes.containsKey(ApplicationRoutes.forgotPassword), true);
       expect(app.initialRoutes.containsKey(ApplicationRoutes.register), true);
-      expect(app.initialRoutes.containsKey(ApplicationRoutes.changePassword), true);
-      expect(app.initialRoutes.containsKey(ApplicationRoutes.createUser), true);
-      expect(app.initialRoutes.containsKey(ApplicationRoutes.listUsers), true);
     });
 
     testWidgets('Routes should build without errors', (WidgetTester tester) async {

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/configuration/app_key_constants.dart';
-import 'package:flutter_bloc_advance/configuration/constants.dart';
 import 'package:flutter_bloc_advance/data/repository/account_repository.dart';
 import 'package:flutter_bloc_advance/presentation/common_blocs/account/account.dart';
-import 'package:flutter_bloc_advance/presentation/screen/forgot_password/bloc/forgot_password.dart';
-import 'package:flutter_bloc_advance/presentation/screen/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_bloc_advance/presentation/screen/register/bloc/register.dart';
 import 'package:flutter_bloc_advance/presentation/screen/register/register_screen.dart';
 import 'package:flutter_bloc_advance/utils/app_constants.dart';
@@ -38,7 +34,6 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _logo(context),
               _usernameField(context),
               _passwordField(context),
               const SizedBox(height: 20),
@@ -46,7 +41,6 @@ class LoginScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[_submitButton(context)]),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[_forgotPasswordLink(context)]),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[_register(context)]),
               _validationZone(),
             ],
@@ -56,20 +50,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  _logo(BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.dark) {
-      return Image.asset(LocaleConstants.logoLightUrl, width: 200, height: 200);
-    } else {
-      return Image.asset(LocaleConstants.defaultImgUrl, width: 200, height: 200);
-    }
-  }
-
   _usernameField(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return SizedBox(
         width: MediaQuery.of(context).size.width * 0.6,
         child: FormBuilderTextField(
-          key: loginTextFieldUsernameKey,
           name: 'username',
           decoration: InputDecoration(labelText: S.of(context).login_user_name),
           validator: FormBuilderValidators.compose(
@@ -94,7 +79,6 @@ class LoginScreen extends StatelessWidget {
           children: [
             Expanded(
               child: FormBuilderTextField(
-                key: loginTextFieldPasswordKey,
                 name: 'password',
                 decoration: InputDecoration(labelText: S.of(context).login_password),
                 // when press the enter key, call submit button function
@@ -118,7 +102,6 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-                key: loginButtonPasswordVisibilityKey,
                 icon: Icon(state.passwordVisible ? Icons.visibility : Icons.visibility_off),
                 onPressed: () => context.read<LoginBloc>().add(const TogglePasswordVisibility())),
           ],
@@ -141,7 +124,6 @@ class LoginScreen extends StatelessWidget {
       },
       child: SizedBox(
         child: ElevatedButton(
-            key: loginButtonSubmitKey,
             child: Text(S.of(context).login_button),
             onPressed: () {
               if (_loginFormKey.currentState!.saveAndValidate()) {
@@ -158,33 +140,9 @@ class LoginScreen extends StatelessWidget {
     context.read<LoginBloc>().add(LoginFormSubmitted(username: username, password: password));
   }
 
-  _forgotPasswordLink(BuildContext context) {
-    return SizedBox(
-      child: TextButton(
-        key: loginButtonForgotPasswordKey,
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<ForgotPasswordBloc>(
-                        create: (context) => ForgotPasswordBloc(
-                          repository: AccountRepository(),
-                        ),
-                        child: ForgotPasswordScreen(),
-                      )));
-          //Navigator.pushNamedAndRemoveUntil(context, ApplicationRoutes.forgotPassword, (route) => false);
-          //Get.offAndToNamed(ApplicationRoutes.forgotPassword);
-          //Get.to(() => ForgotPasswordScreen());
-        },
-        child: Text(S.of(context).password_forgot),
-      ),
-    );
-  }
-
   _register(BuildContext context) {
     return SizedBox(
       child: TextButton(
-        key: loginButtonRegisterKey,
         onPressed: () {
           Navigator.push(
             context,

@@ -1,4 +1,3 @@
-import 'package:flutter_bloc_advance/configuration/allowed_paths.dart';
 import 'package:flutter_bloc_advance/configuration/environment.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,13 +21,5 @@ void main() {
       expect(ProfileConstants.isProduction, true);
       expect(ProfileConstants.api, "https://dhw-api.onrender.com/api");
     });
-  });
-  test("allowed paths",(){
-    expect(allowedPaths, [
-      '/authenticate',
-      '/register',
-      '/logout',
-      '/account/reset-password/init'
-    ]);
   });
 }

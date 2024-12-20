@@ -31,7 +31,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
 
     try {
       User user = await _repository.getAccount();
-      await AppLocalStorage().save(StorageKeys.roles.name, user.authorities);
       await AppLocalStorage().save(StorageKeys.username.name, user.login);
 
       emit(state.copyWith(account: user, status: AccountStatus.success));

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc_advance/data/app_api_exception.dart';
-import 'package:flutter_bloc_advance/data/models/change_password.dart';
 import 'package:flutter_bloc_advance/data/models/user.dart';
 import 'package:flutter_bloc_advance/data/repository/account_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -78,28 +77,6 @@ void main() {
       final entity = mockUserFullPayload;
       final result = await AccountRepository().register(entity);
       expect(result, isA<User>());
-    });
-  });
-
-  //test changePassword
-  group("AccountRepository Change Password", () {
-    test("Given valid passwordChangeDTO when changePassword then return 200", () async {
-      await TestUtils().setupAuthentication();
-      const passwordChangeDTO = mockPasswordChangePayload;
-      final result = await AccountRepository().changePassword(passwordChangeDTO);
-      expect(result, lessThan(300));
-    });
-
-    test("Given null passwordChangeDTO when changePassword then throw BadRequestException", () async {
-      expect(() => AccountRepository().changePassword(null), throwsA(isA<BadRequestException>()));
-    });
-    test("Given empty value passwordChangeDTO when changePassword then throw BadRequestException", () async {
-      const passwordChangeDTO = PasswordChangeDTO();
-      expect(() => AccountRepository().changePassword(passwordChangeDTO), throwsA(isA<BadRequestException>()));
-    });
-    test("Given null value passwordChangeDTO when changePassword then throw BadRequestException", () async {
-      final passwordChangeDTO = mockPasswordChangePayload.copyWith(currentPassword: "", newPassword: "");
-      expect(() => AccountRepository().changePassword(passwordChangeDTO), throwsA(isA<BadRequestException>()));
     });
   });
 

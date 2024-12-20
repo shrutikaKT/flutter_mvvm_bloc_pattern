@@ -6,28 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../data/models/user.dart';
 import '../../../../utils/message.dart';
-import '../../../common_blocs/authority/authority_bloc.dart';
 import '../bloc/user_bloc.dart';
-
-// class EditFormPhoneNumber extends StatelessWidget {
-//   final User user;
-//
-//   const EditFormPhoneNumber({super.key, required this.user});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return FormBuilderTextField(
-//       name: 'editPhoneNumber',
-//       decoration: InputDecoration(
-//         labelText: S.of(context).phone_number,
-//       ),
-//       validator: FormBuilderValidators.compose(
-//         [FormBuilderValidators.required(errorText: S.of(context).required_phone_type)],
-//       ),
-//       initialValue: user.phoneNumber,
-//     );
-//   }
-// }
 
 class EditFormActive extends StatelessWidget {
   final User user;
@@ -137,37 +116,6 @@ class EditFormLoginName extends StatelessWidget {
         ],
       ),
       initialValue: user.login,
-    );
-  }
-}
-
-class EditFormAuthorities extends StatelessWidget {
-  final GlobalKey<FormBuilderState>? formKey;
-  final User user;
-
-  const EditFormAuthorities({super.key, this.formKey, required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthorityBloc, AuthorityState>(
-      builder: (context, state) {
-        if (state is AuthorityLoadSuccessState) {
-          return FormBuilderDropdown(
-            name: 'editAuthorities',
-            decoration: InputDecoration(
-              hintText: S.of(context).authorities,
-            ),
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(errorText: S.of(context).required_field),
-            ]),
-            items: state.authorities!.map((role) => DropdownMenuItem(value: role, child: Text(role))).toList(),
-            initialValue: () {}(),
-            onChanged: (value) {},
-          );
-        } else {
-          return Container();
-        }
-      },
     );
   }
 }

@@ -46,7 +46,6 @@ class EditUserScreen extends StatelessWidget {
                 EditFormEmail(user: user),
                 // EditFormPhoneNumber(user: user),
                 EditFormActive(user: user),
-                EditFormAuthorities(user: user, formKey: formKey),
                 const SizedBox(height: 20),
                 SubmitButton(context, user: user, formKey: formKey)
               ],

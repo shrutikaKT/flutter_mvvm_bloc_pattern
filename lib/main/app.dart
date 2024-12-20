@@ -7,7 +7,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import '../configuration/environment.dart';
 import '../configuration/routes.dart';
 import '../data/repository/account_repository.dart';
-import '../data/repository/authority_repository.dart';
 import '../data/repository/city_repository.dart';
 import '../data/repository/district_repository.dart';
 import '../data/repository/login_repository.dart';
@@ -15,25 +14,16 @@ import '../data/repository/menu_repository.dart';
 import '../data/repository/user_repository.dart';
 import '../generated/l10n.dart';
 import '../presentation/common_blocs/account/account.dart';
-import '../presentation/common_blocs/authority/authority_bloc.dart';
 import '../presentation/common_blocs/city/city_bloc.dart';
 import '../presentation/common_blocs/district/district_bloc.dart';
 import '../presentation/common_widgets/drawer/drawer_bloc/drawer_bloc.dart';
 import '../presentation/screen/account/account_screen.dart';
-import '../presentation/screen/change_password/bloc/change_password_bloc.dart';
-import '../presentation/screen/change_password/change_password_screen.dart';
-import '../presentation/screen/forgot_password/bloc/forgot_password_bloc.dart';
-import '../presentation/screen/forgot_password/forgot_password_screen.dart';
 import '../presentation/screen/home/home_screen.dart';
 import '../presentation/screen/login/bloc/login.dart';
 import '../presentation/screen/login/login_screen.dart';
-import '../presentation/screen/register/bloc/register_bloc.dart';
-import '../presentation/screen/register/register_screen.dart';
 import '../presentation/screen/settings/bloc/settings.dart';
 import '../presentation/screen/settings/settings_screen.dart';
 import '../presentation/screen/user/bloc/user_bloc.dart';
-import '../presentation/screen/user/create/create_user_screen.dart';
-import '../presentation/screen/user/list/list_user_screen.dart';
 
 /// Main application widget. This widget is the root of your application.
 ///
@@ -84,7 +74,6 @@ class App extends StatelessWidget {
   MultiBlocProvider _buildMultiBlocProvider(ThemeData light, ThemeData dark) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthorityBloc>(create: (_) => AuthorityBloc(repository: AuthorityRepository())),
         BlocProvider<AccountBloc>(create: (_) => AccountBloc(repository: AccountRepository())),
         BlocProvider<UserBloc>(create: (_) => UserBloc(userRepository: UserRepository())),
         BlocProvider<CityBloc>(create: (_) => CityBloc(repository: CityRepository())),
@@ -130,23 +119,6 @@ class App extends StatelessWidget {
     ApplicationRoutes.settings: (context) {
       return BlocProvider<SettingsBloc>(
           create: (context) => SettingsBloc(), child: SettingsScreen());
-    },
-    ApplicationRoutes.forgotPassword: (context) {
-      return BlocProvider<ForgotPasswordBloc>(
-          create: (context) => ForgotPasswordBloc(repository: AccountRepository()), child: ForgotPasswordScreen());
-    },
-    ApplicationRoutes.register: (context) {
-      return BlocProvider<RegisterBloc>(create: (context) => RegisterBloc(repository: AccountRepository()), child: RegisterScreen());
-    },
-    ApplicationRoutes.changePassword: (context) {
-      return BlocProvider<ChangePasswordBloc>(
-          create: (context) => ChangePasswordBloc(repository: AccountRepository()), child: ChangePasswordScreen());
-    },
-    ApplicationRoutes.createUser: (context) {
-      return BlocProvider<UserBloc>(create: (context) => UserBloc(userRepository: UserRepository()), child: CreateUserScreen());
-    },
-    ApplicationRoutes.listUsers: (context) {
-      return BlocProvider<UserBloc>(create: (context) => UserBloc(userRepository: UserRepository()), child: ListUserScreen());
     },
   };
 }

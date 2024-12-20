@@ -46,6 +46,6 @@ class _Config {
   };
 
   static Map<String, dynamic> prodConstants = {
-    api: "https://dhw-api.onrender.com/api",
+    api: "/api",
   };
 }

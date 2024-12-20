@@ -9,8 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart' as _i7;
 import 'package:flutter_bloc_advance/configuration/local_storage.dart' as _i8;
 import 'package:flutter_bloc_advance/presentation/common_blocs/account/account_bloc.dart'
     as _i3;
-import 'package:flutter_bloc_advance/presentation/screen/forgot_password/bloc/forgot_password_bloc.dart'
-    as _i4;
 import 'package:flutter_bloc_advance/presentation/screen/login/bloc/login_bloc.dart'
     as _i2;
 import 'package:flutter_bloc_advance/presentation/screen/register/bloc/register_bloc.dart'
@@ -42,17 +40,6 @@ class _FakeLoginState_0 extends _i1.SmartFake implements _i2.LoginState {
 
 class _FakeAccountState_1 extends _i1.SmartFake implements _i3.AccountState {
   _FakeAccountState_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeForgotPasswordState_2 extends _i1.SmartFake
-    implements _i4.ForgotPasswordState {
-  _FakeForgotPasswordState_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -297,142 +284,6 @@ class MockAccountBloc extends _i1.Mock implements _i3.AccountBloc {
 
   @override
   void onChange(_i7.Change<_i3.AccountState>? change) => super.noSuchMethod(
-        Invocation.method(
-          #onChange,
-          [change],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void addError(
-    Object? error, [
-    StackTrace? stackTrace,
-  ]) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #addError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void onError(
-    Object? error,
-    StackTrace? stackTrace,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onError,
-          [
-            error,
-            stackTrace,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
-}
-
-/// A class which mocks [ForgotPasswordBloc].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockForgotPasswordBloc extends _i1.Mock
-    implements _i4.ForgotPasswordBloc {
-  MockForgotPasswordBloc() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.ForgotPasswordState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _FakeForgotPasswordState_2(
-          this,
-          Invocation.getter(#state),
-        ),
-      ) as _i4.ForgotPasswordState);
-
-  @override
-  _i6.Stream<_i4.ForgotPasswordState> get stream => (super.noSuchMethod(
-        Invocation.getter(#stream),
-        returnValue: _i6.Stream<_i4.ForgotPasswordState>.empty(),
-      ) as _i6.Stream<_i4.ForgotPasswordState>);
-
-  @override
-  bool get isClosed => (super.noSuchMethod(
-        Invocation.getter(#isClosed),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  void onTransition(
-          _i7.Transition<_i4.ForgotPasswordEvent, _i4.ForgotPasswordState>?
-              transition) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #onTransition,
-          [transition],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void add(_i4.ForgotPasswordEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #add,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void onEvent(_i4.ForgotPasswordEvent? event) => super.noSuchMethod(
-        Invocation.method(
-          #onEvent,
-          [event],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void emit(_i4.ForgotPasswordState? state) => super.noSuchMethod(
-        Invocation.method(
-          #emit,
-          [state],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void on<E extends _i4.ForgotPasswordEvent>(
-    _i7.EventHandler<E, _i4.ForgotPasswordState>? handler, {
-    _i7.EventTransformer<E>? transformer,
-  }) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #on,
-          [handler],
-          {#transformer: transformer},
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i6.Future<void> close() => (super.noSuchMethod(
-        Invocation.method(
-          #close,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-
-  @override
-  void onChange(_i7.Change<_i4.ForgotPasswordState>? change) =>
-      super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
