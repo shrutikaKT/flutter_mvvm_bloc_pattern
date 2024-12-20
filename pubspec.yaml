@@ -16,44 +16,27 @@ dependencies:
   cupertino_icons:
   flutter_bloc:
   equatable:
-  pdf:
-  printing:
   dart_json_mapper:
-  expansion_tile_card:
   http:
-  device_preview:
-  getwidget:
   flutter_form_builder: ^9.5.0
   form_builder_validators: ^11.0.0
   get:
-  intl:
-  string_2_icon:
   intl_utils:
   pattern_formatter:
-  http_certificate_pinning:
   bloc_concurrency:
-  modbus_client_tcp:
-  custom_navigation_bar:
-  flutter_inappwebview:
-  animated_toggle_switch:
-  reflectable:
-  glob:
   shared_preferences:
   logger: ^2.5.0
   get_storage:
+  mockito:
+  bloc_test: any
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
   flutter_lints: ^4.0.0
   build_runner:
   test: ^1.25.7
-  bloc_test: ^9.1.7
-  mockito: ^5.4.4
-  mocktail:
 
 
 

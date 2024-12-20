@@ -1,11 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/configuration/app_key_constants.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
-import 'package:flutter_bloc_advance/utils/security_utils.dart';
-import 'package:string_2_icon/string_2_icon.dart';
 
 import '../../../configuration/routes.dart';
 import '../../../data/models/menu.dart';
@@ -56,7 +52,6 @@ class ApplicationDrawer extends StatelessWidget {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            key: drawerButtonLogoutKey,
             style: ElevatedButton.styleFrom(elevation: 0),
             onPressed: () => logOutDialog(context),
             child: Text(S.of(context).logout, textAlign: TextAlign.center),
@@ -72,71 +67,18 @@ class ApplicationDrawer extends StatelessWidget {
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemBuilder: (context, index) {
-        if (SecurityUtils.isCurrentUserAdmin() && parentMenus[index].name == 'userManagement') {
-          return _buildMenuListUserManagement(state, parentMenus, index, context);
-        } else if (SecurityUtils.isCurrentUserAdmin() && parentMenus[index].name == 'userManagement') {
-          return Container();
-        } else {
           return _buildMenuListListTile(parentMenus, index, context);
         }
-      },
     );
   }
 
   ListTile _buildMenuListListTile(List<dynamic> parentMenus, int index, BuildContext context) {
     return ListTile(
-      leading: Icon(String2Icon.getIconDataFromString(parentMenus[index].icon)),
       title: Text(S.of(context).translate_menu_title(parentMenus[index].name), style: Theme.of(context).textTheme.bodyMedium),
       onTap: () {
         Navigator.pop(context);
         Navigator.pushNamed(context, parentMenus[index].url);
       },
-    );
-  }
-
-  ExpansionTileCard _buildMenuListUserManagement(DrawerState state, List<dynamic> parentMenus, int index, BuildContext context) {
-    List<Menu> sublistMenu = state.menus.where((element) => element.parent?.id == parentMenus[index].id).toList();
-    sublistMenu.sort((a, b) => a.orderPriority.compareTo(b.orderPriority));
-    return ExpansionTileCard(
-      trailing: sublistMenu.isNotEmpty ? const Icon(Icons.keyboard_arrow_down) : const Icon(Icons.keyboard_arrow_right),
-      onExpansionChanged: (value) {
-        if (value) {
-          if (sublistMenu.isEmpty) {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, parentMenus[index].url);
-          }
-        }
-      },
-      elevation: 0,
-      isThreeLine: false,
-      initiallyExpanded: false,
-      leading: Icon(String2Icon.getIconDataFromString(parentMenus[index].icon)),
-      title: Text(S.of(context).translate_menu_title(parentMenus[index].name), style: Theme.of(context).textTheme.bodyLarge),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: ListView.builder(
-            itemCount: sublistMenu.length,
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Icon(
-                  String2Icon.getIconDataFromString(sublistMenu[index].icon),
-                ),
-                title: Text(
-                  S.of(context).translate_menu_title(sublistMenu[index].name),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, sublistMenu[index].url);
-                },
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 
@@ -170,12 +112,10 @@ class ApplicationDrawer extends StatelessWidget {
           content: Text(S.of(context).logout_sure),
           actions: [
             TextButton(
-              key: drawerButtonLogoutYesKey,
               onPressed: () => onLogout(context),
               child: Text(S.of(context).yes),
             ),
             TextButton(
-              key: drawerButtonLogoutNoKey,
               onPressed: () => onCancel(context),
               child: Text(S.of(context).no),
             ),

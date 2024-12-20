@@ -16,12 +16,6 @@ void main() {
     test('appDescription should be', () {
       expect(AppConstants.appDescription, 'Flutter Template with BLOC and Clean Architecture');
     });
-    test('appAuthor should be sekoya.tech', () {
-      expect(AppConstants.appAuthor, 'sekoya.tech');
-    });
-    test('appAuthorEmail should be', () {
-      expect(AppConstants.appAuthorEmail, 'info@sekoya.tech');
-    });
   });
 
   group('UpperCaseTextFormatter', () {

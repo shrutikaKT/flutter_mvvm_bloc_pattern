@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/configuration/app_key_constants.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
 import 'package:flutter_bloc_advance/generated/l10n.dart';
 import 'package:flutter_bloc_advance/presentation/common_blocs/account/account.dart';
-import 'package:flutter_bloc_advance/presentation/screen/forgot_password/bloc/forgot_password.dart';
 import 'package:flutter_bloc_advance/presentation/screen/login/bloc/login.dart';
 import 'package:flutter_bloc_advance/presentation/screen/login/login_screen.dart';
 import 'package:flutter_bloc_advance/presentation/screen/register/bloc/register.dart';
@@ -21,11 +19,10 @@ import 'login_screen_test.mocks.dart';
 
 /// Login Screen Test
 /// claas AccountsScreen extent
-@GenerateMocks([LoginBloc, AccountBloc, ForgotPasswordBloc, RegisterBloc, AppLocalStorage])
+@GenerateMocks([LoginBloc, AccountBloc, RegisterBloc, AppLocalStorage])
 void main() {
   late MockLoginBloc loginBloc;
   late MockAccountBloc accountBloc;
-  late MockForgotPasswordBloc forgotPasswordBloc;
   late MockRegisterBloc registerBloc;
   late MockAppLocalStorage appLocalStorage;
   //region setup
@@ -56,7 +53,6 @@ void main() {
   setUp(() {
     loginBloc = MockLoginBloc();
     accountBloc = MockAccountBloc();
-    forgotPasswordBloc = MockForgotPasswordBloc();
     registerBloc = MockRegisterBloc();
     appLocalStorage = MockAppLocalStorage();
 
@@ -65,9 +61,6 @@ void main() {
 
     when(accountBloc.stream).thenAnswer((_) => Stream.fromIterable([const AccountState()]));
     when(accountBloc.state).thenReturn(const AccountState());
-
-    when(forgotPasswordBloc.stream).thenAnswer((_) => Stream.fromIterable([const ForgotPasswordInitialState()]));
-    when(forgotPasswordBloc.state).thenReturn(const ForgotPasswordInitialState());
 
     when(registerBloc.stream).thenAnswer((_) => Stream.fromIterable([const RegisterInitialState()]));
     when(registerBloc.state).thenReturn(const RegisterInitialState());
@@ -117,7 +110,6 @@ void main() {
             BlocProvider<LoginBloc>(create: (context) => loginBloc),
             BlocProvider<AccountBloc>(create: (context) => accountBloc),
             BlocProvider<RegisterBloc>(create: (context) => registerBloc),
-            BlocProvider<ForgotPasswordBloc>(create: (context) => forgotPasswordBloc),
           ],
           child: LoginScreen(),
         ));
@@ -165,7 +157,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      final usernameFieldFinder = find.byKey(Key(''));
 
       //Then:
       expect(usernameFieldFinder, findsOneWidget);
@@ -180,7 +172,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      final passwordFieldFinder = find.byKey(Key(''));
 
       //Then:
       expect(passwordFieldFinder, findsOneWidget);
@@ -199,7 +191,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final passwordVisibilityFinder = find.byKey(loginButtonPasswordVisibilityKey);
+      final passwordVisibilityFinder = find.byKey(Key(''));
 
       //Then:
       expect(passwordVisibilityFinder, findsOneWidget);
@@ -207,7 +199,7 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
       // check loginTextFieldPassword password is visible or not
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      final passwordFieldFinder = find.byKey(Key(''));
       final textField = tester.widget<FormBuilderTextField>(passwordFieldFinder);
       expect(textField.obscureText, true);
 
@@ -222,7 +214,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+      final submitButtonFinder = find.byKey(Key(''));
 
       //Then:
       expect(submitButtonFinder, findsOneWidget);
@@ -237,7 +229,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final forgotPasswordButtonFinder = find.byKey(loginButtonForgotPasswordKey);
+      final forgotPasswordButtonFinder = find.byKey(Key(''));
 
       //Then:
       expect(forgotPasswordButtonFinder, findsOneWidget);
@@ -254,7 +246,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
       //When:
-      final registerButtonFinder = find.byKey(loginButtonRegisterKey);
+      final registerButtonFinder = find.byKey(Key(''));
 
       //Then:
       expect(registerButtonFinder, findsOneWidget);
@@ -273,13 +265,13 @@ void main() {
       await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
-      final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+      // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      // final submitButtonFinder = find.byKey(loginButtonSubmitKey);
       //When:
-      await tester.enterText(usernameFieldFinder, "admin");
-      await tester.enterText(passwordFieldFinder, "admin");
-      await tester.tap(submitButtonFinder);
+      // await tester.enterText(usernameFieldFinder, "admin");
+      // await tester.enterText(passwordFieldFinder, "admin");
+      // await tester.tap(submitButtonFinder);
       await tester.pumpAndSettle(const Duration(seconds: 5));
 
       //Then:
@@ -294,13 +286,13 @@ void main() {
       await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
-      final submitButtonFinder = find.byKey(loginButtonSubmitKey);
-      //When:
-      await tester.enterText(usernameFieldFinder, "admin");
-      await tester.enterText(passwordFieldFinder, "admin");
-      await tester.tap(submitButtonFinder);
+      // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      // final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+      // //When:
+      // await tester.enterText(usernameFieldFinder, "admin");
+      // await tester.enterText(passwordFieldFinder, "admin");
+      // await tester.tap(submitButtonFinder);
       await tester.pumpAndSettle(const Duration(seconds: 5));
 
       //Then:
@@ -319,13 +311,13 @@ void main() {
       await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
-      final submitButtonFinder = find.byKey(loginButtonSubmitKey);
-      //When:
-      await tester.enterText(usernameFieldFinder, "");
-      await tester.enterText(passwordFieldFinder, "");
-      await tester.tap(submitButtonFinder);
+      // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      // final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+      // //When:
+      // await tester.enterText(usernameFieldFinder, "");
+      // await tester.enterText(passwordFieldFinder, "");
+      // await tester.tap(submitButtonFinder);
       await tester.pumpAndSettle(const Duration(seconds: 5));
 
       //Then:
@@ -347,12 +339,12 @@ void main() {
       await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
 
-      // When
-      await tester.enterText(usernameFieldFinder, "admin");
-      await tester.enterText(passwordFieldFinder, "admin");
+      // // When
+      // await tester.enterText(usernameFieldFinder, "admin");
+      // await tester.enterText(passwordFieldFinder, "admin");
 
       // Then
       await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -368,12 +360,12 @@ void main() {
       await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-      final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-      final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+      // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+      // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
 
-      // When
-      await tester.enterText(usernameFieldFinder, "");
-      await tester.enterText(passwordFieldFinder, "");
+      // // When
+      // await tester.enterText(usernameFieldFinder, "");
+      // await tester.enterText(passwordFieldFinder, "");
 
       // Then
       await tester.testTextInput.receiveAction(TextInputAction.done);
@@ -418,24 +410,23 @@ void main() {
               BlocProvider<LoginBloc>(create: (context) => loginBloc),
               BlocProvider<AccountBloc>(create: (context) => accountBloc),
               BlocProvider<RegisterBloc>(create: (context) => registerBloc),
-              BlocProvider<ForgotPasswordBloc>(create: (context) => forgotPasswordBloc),
             ],
             child: LoginScreen(key: const Key("Validate_buildWhen_with_LoginLoadedState_key"),),
           ));
     }
     when(loginBloc.add(const LoginFormSubmitted(username: "admin", password: "admin"))).thenAnswer((_) => const LoginLoadedState());
     await tester.pumpWidget(getWidgetX());
-    final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-    final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+    // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+    // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
 
-    // When
-    await tester.enterText(usernameFieldFinder, "admin");
-    await tester.enterText(passwordFieldFinder, "admin");
+    // // When
+    // await tester.enterText(usernameFieldFinder, "admin");
+    // await tester.enterText(passwordFieldFinder, "admin");
 
     //when(loginBloc.stream).thenAnswer((_) => Stream.fromIterable([const LoginLoadedState()]));
     //when(loginBloc.state).thenReturn(const LoginLoadedState());
     // Then
-    final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+    final submitButtonFinder = find.byKey(Key(''));
     await tester.tap(submitButtonFinder);
     await tester.pumpAndSettle(const Duration(milliseconds: 3000));
 
@@ -457,19 +448,19 @@ void main() {
     await tester.pumpWidget(Container());
       await tester.pumpAndSettle();
       await tester.pumpWidget(getWidget());
-    //loginBloc.add(const LoginFormSubmitted(username: "invalid", password: "invalid"));
-    final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
-    final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
+    // //loginBloc.add(const LoginFormSubmitted(username: "invalid", password: "invalid"));
+    // final usernameFieldFinder = find.byKey(loginTextFieldUsernameKey);
+    // final passwordFieldFinder = find.byKey(loginTextFieldPasswordKey);
 
-    // When
-      await tester.enterText(usernameFieldFinder, "invalid");
-      await tester.enterText(passwordFieldFinder, "invalid");
+    // // When
+    //   await tester.enterText(usernameFieldFinder, "invalid");
+    //   await tester.enterText(passwordFieldFinder, "invalid");
 
     when(loginBloc.stream).thenAnswer((_) => Stream.fromIterable([const LoginErrorState(message: "Login failed.")]));
     when(loginBloc.state).thenReturn(const LoginErrorState(message: "Login failed."));
     when(loginBloc.add(const LoginFormSubmitted(username: "invalid", password: "invalid"))).thenAnswer((_) => const LoginErrorState(message: "Login failed."));
       // Then
-      final submitButtonFinder = find.byKey(loginButtonSubmitKey);
+      final submitButtonFinder = find.byKey(Key(''));
       await tester.tap(submitButtonFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       // When

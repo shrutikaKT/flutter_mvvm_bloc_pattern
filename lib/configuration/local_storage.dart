@@ -16,22 +16,20 @@ abstract class StorageStrategy {
 class AppLocalStorageCached {
   static final _log = AppLogger.getLogger("AppLocalStorageCached");
   static late String? jwtToken;
-  static late List<String>? roles;
   static late String? language;
   static late String? username;
 
   static Future<void> loadCache() async {
     _log.trace("Loading cache");
     jwtToken = await AppLocalStorage().read(StorageKeys.jwtToken.name);
-    roles = await AppLocalStorage().read(StorageKeys.roles.name);
     language = await AppLocalStorage().read(StorageKeys.language.name) ?? "en";
     username = await AppLocalStorage().read(StorageKeys.username.name);
-    _log.trace("Loaded cache with username:{}, roles:{}, language:{}, jwtToken:{}", [username, roles, language, jwtToken]);
+    _log.trace("Loaded cache with username:{}, language:{}, jwtToken:{}", [username, language, jwtToken]);
   }
 }
 
 /// LocalStorage predefined keys
-enum StorageKeys { jwtToken, roles, language, username }
+enum StorageKeys { jwtToken, language, username }
 
 
 /// Application Local Storage

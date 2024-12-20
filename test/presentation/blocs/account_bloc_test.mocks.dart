@@ -5,7 +5,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:flutter_bloc_advance/data/models/change_password.dart' as _i5;
 import 'package:flutter_bloc_advance/data/models/user.dart' as _i2;
 import 'package:flutter_bloc_advance/data/repository/account_repository.dart'
     as _i3;
@@ -50,16 +49,6 @@ class MockAccountRepository extends _i1.Mock implements _i3.AccountRepository {
         ),
         returnValue: _i4.Future<_i2.User?>.value(),
       ) as _i4.Future<_i2.User?>);
-
-  @override
-  _i4.Future<int> changePassword(_i5.PasswordChangeDTO? passwordChangeDTO) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #changePassword,
-          [passwordChangeDTO],
-        ),
-        returnValue: _i4.Future<int>.value(0),
-      ) as _i4.Future<int>);
 
   @override
   _i4.Future<int> resetPassword(String? mailAddress) => (super.noSuchMethod(

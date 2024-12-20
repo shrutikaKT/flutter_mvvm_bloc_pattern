@@ -5,8 +5,6 @@ import 'dart:io';
 
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc_advance/configuration/allowed_paths.dart';
 import 'package:flutter_bloc_advance/configuration/app_logger.dart';
 import 'package:flutter_bloc_advance/configuration/environment.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
@@ -124,10 +122,6 @@ class HttpUtils {
 
   static Future<http.Response> postRequest<T>(String endpoint, T body, {Map<String, String>? headers}) async {
     debugPrint("BEGIN: POST Request Method start : ${ProfileConstants.api}$endpoint");
-
-    /// if isMock is true, return mock data instead of making a request
-    if (!ProfileConstants.isProduction) return await mockRequest('POST', endpoint);
-
     final headers = await HttpUtils.headers();
     String messageBody = "";
 
@@ -156,8 +150,6 @@ class HttpUtils {
   static Future<http.Response> getRequest(String endpoint) async {
     debugPrint("BEGIN: GET Request Method start : ${ProfileConstants.api}$endpoint");
 
-    /// if isMock is true, return mock data instead of making a request
-    if (!ProfileConstants.isProduction) return (await mockRequest('GET', endpoint));
     final http.Response response;
     final headers = await HttpUtils.headers();
     try {
@@ -173,31 +165,8 @@ class HttpUtils {
     return response;
   }
 
-  // static Future<int> getRequestHeader(String endpoint) async {
-  //   debugPrint(endpoint);
-  //   var headers = await HttpUtils.headers();
-  //   try {
-  //     var result = await http
-  //         .get(Uri.parse('${ProfileConstants.api}$endpoint'), headers: headers)
-  //         .timeout(cont Duration(seconds: timeout));
-  //     debugPrint(result.headers.toString());
-  //     if (result.statusCode == 401) {
-  //       throw UnauthorizedException(result.headers.toString());
-  //     }
-  //     Map<String, dynamic> pageable = <String, dynamic>{};
-  //     pageable['x-total-count'] = result.headers['x-total-count'];
-  //     int countOffers = int.parse(result.headers['x-total-count']!);
-  //     return countOffers;
-  //   } on SocketException {
-  //     throw FetchDataException(noInternetConnectionError);
-  //   } on TimeoutException {
-  //     throw FetchDataException(requestTimeoutError);
-  //   }
-  // }
-
   static Future<http.Response> putRequest<T>(String endpoint, T body) async {
     debugPrint("BEGIN: PUT Request Method start : ${ProfileConstants.api}$endpoint");
-    if (!ProfileConstants.isProduction) return await mockRequest('PUT', endpoint);
     var headers = await HttpUtils.headers();
     final String json = JsonMapper.serialize(body, _serOps);
     final http.Response response;
@@ -216,7 +185,6 @@ class HttpUtils {
 
   static Future<http.Response> patchRequest<T>(String endpoint, T body) async {
     debugPrint("BEGIN: PATCH Request Method start : ${ProfileConstants.api}$endpoint");
-    if (!ProfileConstants.isProduction) return await mockRequest('PATCH', endpoint);
     var headers = await HttpUtils.headers();
     final String json = JsonMapper.serialize(body, _serOps);
     final http.Response response;
@@ -235,7 +203,6 @@ class HttpUtils {
 
   static Future<http.Response> deleteRequest(String endpoint) async {
     debugPrint("BEGIN: DELETE Request Method start : ${ProfileConstants.api}$endpoint");
-    if (!ProfileConstants.isProduction) return await mockRequest('DELETE', endpoint);
     var headers = await HttpUtils.headers();
     final http.Response response;
     try {
@@ -251,81 +218,4 @@ class HttpUtils {
     return response;
   }
 
-  // dynamic returnResponse(http.Response response) {
-  //   if (ProfileConstants.isProduction == true) {
-  //     return 200;
-  //   }
-  //   switch (response.statusCode) {
-  //     case 200:
-  //       return response;
-  //     case 400:
-  //       throw BadRequestException(response.body.toString());
-  //     case 401:
-  //     case 403:
-  //       throw UnauthorizedException(response.body.toString());
-  //     case 417:
-  //       throw ApiBusinessException(response.body.toString());
-  //     case 500:
-  //     default:
-  //       throw FetchDataException(
-  //           'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
-  //   }
-  // }
-
-  static Future<http.Response> mockRequest(String httpMethod, String endpoint) async {
-    debugPrint("BEGIN: Mock Request Method start : $httpMethod $endpoint");
-
-    var headers = await HttpUtils.headers();
-    if (!allowedPaths.contains(endpoint)) {
-      if (headers['Authorization'] == null) {
-        throw UnauthorizedException("Unauthorized Access");
-      }
-    }
-
-    String responseBody = "OK";
-    int httpStatusCode = HttpStatus.ok;
-    Future<http.Response> response = Future.value(http.Response("", httpStatusCode));
-    switch (httpMethod) {
-      case 'POST':
-        httpStatusCode = HttpStatus.created;
-        break;
-      case 'DELETE':
-        httpStatusCode = HttpStatus.noContent;
-        return Future.value(http.Response(responseBody, httpStatusCode));
-      case 'GET':
-      case 'PUT':
-        httpStatusCode = HttpStatus.ok;
-        break;
-      default:
-        httpStatusCode = HttpStatus.ok;
-    }
-
-    try {
-      String path = ProfileConstants.api;
-      // @formatter:off
-      // use GET_resource.json for all GET requests except for id based GET requests
-      final queryParams =
-          endpoint
-              .replaceAll("/", "_")
-              .replaceAll("?", "_")
-              .replaceAll("&", "_")
-              .replaceAll("=", "_")
-              .replaceAll(",", "_")
-              .replaceAll(".", "_")
-              .replaceAll(";", "_")
-              .replaceAll("-", "_")
-      ;
-      // @formatter:on
-      String fileName = "$httpMethod$queryParams.json";
-      String mockDataPath = "$path/$fileName";
-      debugPrint("Mock data path: $mockDataPath");
-      responseBody = await rootBundle.loadString(mockDataPath);
-      response = Future.value(http.Response(responseBody, httpStatusCode));
-      debugPrint("Mock data loaded from $httpMethod $endpoint : response body length: ${responseBody.length}");
-    } catch (e) {
-      debugPrint("Error loading mock data httpMethod:$httpMethod, endpoint:$endpoint. error: $e");
-    }
-    debugPrint("END: Mock Request Method end : $httpMethod $endpoint");
-    return response;
-  }
 }

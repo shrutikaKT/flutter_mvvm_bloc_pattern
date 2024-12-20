@@ -1,7 +1,6 @@
 import 'package:flutter_bloc_advance/configuration/app_logger.dart';
 import 'package:flutter_bloc_advance/data/app_api_exception.dart';
 import 'package:flutter_bloc_advance/data/http_utils.dart';
-import 'package:flutter_bloc_advance/data/models/change_password.dart';
 import 'package:flutter_bloc_advance/data/models/user.dart';
 
 class AccountRepository {
@@ -32,23 +31,6 @@ class AccountRepository {
     var response = HttpUtils.decodeUTF8(httpResponse.body.toString());
     var result = User.fromJsonString(response);
     _log.debug("END:register successful");
-    return result;
-  }
-
-  Future<int> changePassword(PasswordChangeDTO? passwordChangeDTO) async {
-    _log.debug("BEGIN:changePassword repository start : {}", [passwordChangeDTO.toString()]);
-    if (passwordChangeDTO == null) {
-      throw BadRequestException("PasswordChangeDTO null");
-    }
-    if (passwordChangeDTO.currentPassword == null ||
-        passwordChangeDTO.currentPassword!.isEmpty ||
-        passwordChangeDTO.newPassword == null ||
-        passwordChangeDTO.newPassword!.isEmpty) {
-      throw BadRequestException("PasswordChangeDTO currentPassword or newPassword null");
-    }
-    final httpResponse = await HttpUtils.postRequest<PasswordChangeDTO>("/$_resource/change-password", passwordChangeDTO);
-    var result = httpResponse.statusCode;
-    _log.debug("END:changePassword successful");
     return result;
   }
 

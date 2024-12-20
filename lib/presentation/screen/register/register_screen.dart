@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/configuration/app_key_constants.dart';
 import 'package:flutter_bloc_advance/data/models/user.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -69,7 +68,6 @@ class RegisterScreen extends StatelessWidget {
 
   FormBuilderTextField _formBuilderTextFieldFirstName(BuildContext context) {
     return FormBuilderTextField(
-      key: registerFirstNameTextFieldKey,
       name: "firstname",
       decoration: InputDecoration(labelText: S.of(context).first_name),
       maxLines: 1,
@@ -79,7 +77,6 @@ class RegisterScreen extends StatelessWidget {
 
   FormBuilderTextField _formBuilderTextFieldLastName(BuildContext context) {
     return FormBuilderTextField(
-      key: registerLastNameTextFieldKey,
       name: "lastname",
       decoration: InputDecoration(labelText: S.of(context).last_name),
       maxLines: 1,
@@ -89,7 +86,6 @@ class RegisterScreen extends StatelessWidget {
 
   FormBuilderTextField _formBuilderTextFieldEmail(BuildContext context) {
     return FormBuilderTextField(
-      key: registerEmailTextFieldKey,
       name: "email",
       decoration: InputDecoration(labelText: S.of(context).email),
       maxLines: 1,
@@ -113,7 +109,6 @@ class RegisterScreen extends StatelessWidget {
       },
       child: SizedBox(
         child: ElevatedButton(
-            key: registerSubmitButtonKey,
             child: Text(S.of(context).save),
             onPressed: () {
               if (_registerFormKey.currentState?.saveAndValidate() ?? false) {
