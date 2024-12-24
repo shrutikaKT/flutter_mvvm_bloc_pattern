@@ -6,21 +6,19 @@ import 'package:flutter_bloc_advance/configuration/environment.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
 
 import 'app.dart';
-import 'main_local.mapper.g.dart' show initializeJsonMapper;
 
 /// IMPORTANT!! run this command to generate main_prod.mapper.g.dart
 // dart run build_runner build --delete-conflicting-outputs
 // flutter pub run intl_utils:generate
-/// main entry point of PRODUCTION
+/// main entry point of local computer development
 void main() async {
-  AppLogger.configure(isProduction: true);
-  final log = AppLogger.getLogger("main_prod.dart");
+  AppLogger.configure(isProduction: false);
+  final log = AppLogger.getLogger("main.dart");
 
-  ProfileConstants.setEnvironment(Environment.prod);
+  ProfileConstants.setEnvironment(Environment.dev);
 
-  log.info("Starting App with env: {}", [Environment.prod.name]);
+  log.info("Starting App with env: {}", [Environment.dev.name]);
 
-  initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
 
   const defaultLanguage = "en";
@@ -31,5 +29,5 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(App(language: defaultLanguage, initialTheme: initialTheme));
   });
-  log.info("Started App with env: {} language: {} and theme: {}", [Environment.prod.name, defaultLanguage, initialTheme.name]);
+  log.info("Started App with local environment language: {} and theme: {}", [defaultLanguage, initialTheme.name]);
 }
