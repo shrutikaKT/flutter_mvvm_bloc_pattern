@@ -29,6 +29,7 @@ dependencies:
   get_storage:
   mockito:
   bloc_test: any
+  flutter_stripe: any
 
 
 dev_dependencies:

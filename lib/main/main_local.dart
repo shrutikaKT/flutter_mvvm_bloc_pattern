@@ -6,7 +6,6 @@ import 'package:flutter_bloc_advance/configuration/environment.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
 
 import 'app.dart';
-import 'main_local.mapper.g.dart' show initializeJsonMapper;
 
 /// IMPORTANT!! run this command to generate main_prod.mapper.g.dart
 // dart run build_runner build --delete-conflicting-outputs
@@ -20,7 +19,6 @@ void main() async {
 
   log.info("Starting App with env: {}", [Environment.dev.name]);
 
-  initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
 
   const defaultLanguage = "en";
