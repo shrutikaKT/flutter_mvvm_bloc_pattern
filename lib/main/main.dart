@@ -13,7 +13,7 @@ import 'app.dart';
 /// main entry point of local computer development
 void main() async {
   AppLogger.configure(isProduction: false);
-  final log = AppLogger.getLogger("main_local.dart");
+  final log = AppLogger.getLogger("main.dart");
 
   ProfileConstants.setEnvironment(Environment.dev);
 
