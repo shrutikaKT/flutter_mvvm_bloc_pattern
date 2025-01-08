@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
 
 import '../../../configuration/routes.dart';
-import '../../../data/models/menu.dart';
 import '../../../generated/l10n.dart';
 import '../../common_blocs/account/account.dart';
 import 'drawer_bloc/drawer_bloc.dart';

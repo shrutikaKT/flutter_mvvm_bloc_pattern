@@ -126,10 +126,11 @@ class LoginScreen extends StatelessWidget {
         child: ElevatedButton(
             child: Text(S.of(context).login_button),
             onPressed: () {
-              if (_loginFormKey.currentState!.saveAndValidate()) {
-                _submitEvent(context,
-                    username: _loginFormKey.currentState!.value['username'], password: _loginFormKey.currentState!.value['password']);
-              }
+              Navigator.pushNamed(context, ApplicationRoutes.payment);
+              // if (_loginFormKey.currentState!.saveAndValidate()) {
+              //   _submitEvent(context,
+              //       username: _loginFormKey.currentState!.value['username'], password: _loginFormKey.currentState!.value['password']);
+              // }
             },
           ),
       ),

@@ -1,6 +1,9 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_advance/data/repository/stripe_repository.dart';
+import 'package:flutter_bloc_advance/presentation/common_blocs/stripe/stripe_bloc.dart';
+import 'package:flutter_bloc_advance/presentation/screen/payment/payment_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -48,7 +51,7 @@ class App extends StatelessWidget {
       light: _buildLightTheme(),
       dark: _buildDarkTheme(),
       debugShowFloatingThemeButton: false,
-      initial: initialTheme,
+      initial: AdaptiveThemeMode.light,
       builder: (light, dark) {
         return _buildMultiBlocProvider(light, dark);
       },
@@ -74,11 +77,21 @@ class App extends StatelessWidget {
   MultiBlocProvider _buildMultiBlocProvider(ThemeData light, ThemeData dark) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AccountBloc>(create: (_) => AccountBloc(repository: AccountRepository())),
-        BlocProvider<UserBloc>(create: (_) => UserBloc(userRepository: UserRepository())),
-        BlocProvider<CityBloc>(create: (_) => CityBloc(repository: CityRepository())),
-        BlocProvider<DistrictBloc>(create: (_) => DistrictBloc(repository: DistrictRepository())),
-        BlocProvider<DrawerBloc>(create: (_) => DrawerBloc(loginRepository: LoginRepository(), menuRepository: MenuRepository())),
+        BlocProvider<AccountBloc>(
+            create: (_) => AccountBloc(repository: AccountRepository())),
+        BlocProvider<UserBloc>(
+            create: (_) => UserBloc(userRepository: UserRepository())),
+        BlocProvider<CityBloc>(
+            create: (_) => CityBloc(repository: CityRepository())),
+        BlocProvider<DistrictBloc>(
+            create: (_) => DistrictBloc(repository: DistrictRepository())),
+        BlocProvider<DrawerBloc>(
+            create: (_) => DrawerBloc(
+                loginRepository: LoginRepository(),
+                menuRepository: MenuRepository())),
+        BlocProvider<StripeBloc>(
+            create: (_) => StripeBloc(stripeRepository: StripeRepository())
+              ..add(const GetAllCards()))
       ],
       child: _buildGetMaterialApp(light, dark),
     );
@@ -88,6 +101,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       theme: light,
       darkTheme: dark,
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: ProfileConstants.isDevelopment,
       debugShowMaterialGrid: false,
       localizationsDelegates: const [
@@ -102,23 +116,35 @@ class App extends StatelessWidget {
       routes: _initialRoutes,
     );
   }
+
   @visibleForTesting
   Map<String, WidgetBuilder> get initialRoutes => _initialRoutes;
   final _initialRoutes = {
     ApplicationRoutes.home: (context) {
       return BlocProvider<AccountBloc>(
-          create: (context) => AccountBloc(repository: AccountRepository())..add(const AccountLoad()), child: HomeScreen());
+          create: (context) => AccountBloc(repository: AccountRepository())
+            ..add(const AccountLoad()),
+          child: HomeScreen());
     },
     ApplicationRoutes.account: (context) {
       return BlocProvider<AccountBloc>(
-          create: (context) => AccountBloc(repository: AccountRepository())..add(const AccountLoad()), child: AccountsScreen());
+          create: (context) => AccountBloc(repository: AccountRepository())
+            ..add(const AccountLoad()),
+          child: AccountsScreen());
     },
     ApplicationRoutes.login: (context) {
-      return BlocProvider<LoginBloc>(create: (context) => LoginBloc(repository: LoginRepository()), child: LoginScreen());
+      return BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(repository: LoginRepository()),
+          child: LoginScreen());
     },
     ApplicationRoutes.settings: (context) {
       return BlocProvider<SettingsBloc>(
           create: (context) => SettingsBloc(), child: SettingsScreen());
+    },
+    ApplicationRoutes.payment: (context) {
+      return BlocProvider<StripeBloc>(
+          create: (context) => StripeBloc(stripeRepository: StripeRepository()),
+          child: PaymentScreen());
     },
   };
 }

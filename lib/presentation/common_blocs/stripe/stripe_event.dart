@@ -15,26 +15,39 @@ class ConfirmPayment extends StripeEvent {
   List<Object> get props => [];
 }
 
-class AddCard extends StripeEvent {
-  final String cardNumber;
-  final String expiryMonth;
-  final String expiryYear;
-  final String cvc;
-
-  const AddCard(
-      {required this.cardNumber,
-      required this.expiryMonth,
-      required this.expiryYear,
-      required this.cvc});
-
+class MakePayment extends StripeEvent {
+  final double amount;
+  const MakePayment({required this.amount});
   @override
-  List<Object> get props => [cardNumber, expiryMonth, expiryYear, cvc];
+  List<Object> get props => [];
 }
 
-class MakePayment extends StripeEvent {
-  final String clientSecret;
-  final double amount;
-  const MakePayment({required this.clientSecret, required this.amount});
+class AddMyCard extends StripeEvent {
+  final String cardNumber;
+  final int expiryYear;
+  final int expiryMonth;
+  final String cardCVC;
+  const AddMyCard(
+      {required this.cardNumber,
+      required this.expiryYear,
+      required this.expiryMonth,
+      required this.cardCVC});
+  @override
+  List<Object> get props => [cardNumber, expiryYear, expiryMonth, cardCVC];
+}
+
+class CardChanged extends StripeEvent {
+  final CardFieldInputDetails cardDetails;
+
+  const CardChanged({required this.cardDetails});
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetAllCards extends StripeEvent {
+  const GetAllCards();
+
   @override
   List<Object> get props => [];
 }

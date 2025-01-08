@@ -1,35 +1,89 @@
 part of 'stripe_bloc.dart';
 
-sealed class StripeState extends Equatable {
+class StripeState extends Equatable {
   const StripeState();
-  
+
   @override
   List<Object> get props => [];
 }
 
-class PaymentInitial extends StripeState {
-    @override
+class PaymentInitializeState extends StripeState {
+  @override
   List<Object> get props => [];
 }
 
-class PaymentLoading extends StripeState {
-    @override
+class PaymentLoadingState extends StripeState {
+  @override
   List<Object> get props => [];
 }
 
-class PaymentLoaded extends StripeState {
-    @override
+class PaymentLoadedState extends StripeState {
+  @override
   List<Object> get props => [];
 }
 
-class PaymentSuccess extends StripeState {
-    @override
+class PaymentSuccessState extends StripeState {
+  @override
   List<Object> get props => [];
 }
 
-class PaymentFailure extends StripeState {
+class PaymentFailureState extends StripeState {
   final String error;
-  const PaymentFailure(this.error);
-    @override
+  const PaymentFailureState(this.error);
+  @override
+  List<Object> get props => [];
+}
+
+class AddingCardState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardAddedState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class AddingCardFailedState extends StripeState {
+  final String error;
+  const AddingCardFailedState(this.error);
+  @override
+  List<Object> get props => [];
+}
+
+class CardFormInitialState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardFormValidState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardFormInvalidState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class AllCardInitiatedState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsLoadingState extends StripeState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsLoadedState extends StripeState {
+  final List<CardDetail?> cards;
+  const CardsLoadedState({required this.cards});
+  @override
+  List<Object> get props => [cards];
+}
+
+class CardsLoadingFailed extends StripeState {
+  @override
   List<Object> get props => [];
 }

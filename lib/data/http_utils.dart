@@ -134,6 +134,7 @@ class HttpUtils {
     final http.Response response;
     try {
       final url = Uri.parse('${ProfileConstants.api}$endpoint');
+      _log.info("URL : $url");
       response = await client.post(url, headers: headers, body: messageBody, encoding: _encoding).timeout(_timeout);
       checkUnauthorizedAccess(endpoint, response);
     } on SocketException catch (se) {
@@ -142,6 +143,9 @@ class HttpUtils {
     } on TimeoutException catch (toe) {
       debugPrint("Timeout Exception: $toe");
       throw FetchDataException(requestTimeoutError);
+    } catch (error){
+      _log.error("END: ERROR $error");
+      throw("Unknown");
     }
     debugPrint("END: POST Request Method end : ${ProfileConstants.api}$endpoint");
     return response;

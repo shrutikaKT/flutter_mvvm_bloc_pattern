@@ -3,8 +3,8 @@ targets:
     builders:
       dart_json_mapper:
         generate_for:
-          - lib/main/main_local.dart
-          - lib/main/main_prod.dart
+          # here should be listed entry point files having 'void main()' function
+          - lib/main/main.dart
       reflectable:
         generate_for:
           - no/files

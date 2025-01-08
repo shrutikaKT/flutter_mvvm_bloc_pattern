@@ -14,6 +14,7 @@ class ApplicationRoutes {
   static const register = '/register';
   static const settings = '/settings';
   static const account = '/account';
+  static const payment = '/payment';
 }
 
 String initialRouteControl() {
@@ -23,6 +24,6 @@ String initialRouteControl() {
     return ApplicationRoutes.home;
   } else {
     _log.debug("Initial route is login");
-    return ApplicationRoutes.login;
+    return ApplicationRoutes.payment;
   }
 }

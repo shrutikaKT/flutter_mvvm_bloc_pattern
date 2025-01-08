@@ -157,6 +157,7 @@ class SubmitButton extends StatelessWidget {
     );
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
+        
         if (state is UserEditFailureState) {
           Message.errorMessage(title: S.of(context).failed, context: context, content: state.message);
         } else if (state is UserEditSuccessState) {

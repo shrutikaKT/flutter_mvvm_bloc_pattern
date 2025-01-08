@@ -38,7 +38,7 @@ class _Config {
   static const api = "API";
 
   static Map<String, dynamic> devConstants = {
-    api: "mock",
+    api: "https://stripe-poc-production.up.railway.app",
   };
 
   static Map<String, dynamic> testConstants = {
