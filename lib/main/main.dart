@@ -5,7 +5,6 @@ import 'package:flutter_bloc_advance/configuration/app_logger.dart';
 import 'package:flutter_bloc_advance/configuration/environment.dart';
 import 'package:flutter_bloc_advance/configuration/local_storage.dart';
 import 'package:flutter_bloc_advance/utils/app_constants.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'app.dart';
 import 'main.mapper.g.dart';
@@ -22,8 +21,6 @@ void main() async {
   log.info("Starting App with env: {}", [Environment.dev.name]);
   initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
-
-  Stripe.publishableKey = AppConstants.stripePublishableKey;
 
   const defaultLanguage = "en";
   await AppLocalStorage().save(StorageKeys.language.name, defaultLanguage);

@@ -1,9 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_advance/data/repository/stripe_repository.dart';
-import 'package:flutter_bloc_advance/presentation/common_blocs/stripe/stripe_bloc.dart';
-import 'package:flutter_bloc_advance/presentation/screen/payment/payment_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -89,9 +86,6 @@ class App extends StatelessWidget {
             create: (_) => DrawerBloc(
                 loginRepository: LoginRepository(),
                 menuRepository: MenuRepository())),
-        BlocProvider<StripeBloc>(
-            create: (_) => StripeBloc(stripeRepository: StripeRepository())
-              ..add(const GetAllCards()))
       ],
       child: _buildGetMaterialApp(light, dark),
     );
@@ -140,11 +134,6 @@ class App extends StatelessWidget {
     ApplicationRoutes.settings: (context) {
       return BlocProvider<SettingsBloc>(
           create: (context) => SettingsBloc(), child: SettingsScreen());
-    },
-    ApplicationRoutes.payment: (context) {
-      return BlocProvider<StripeBloc>(
-          create: (context) => StripeBloc(stripeRepository: StripeRepository()),
-          child: PaymentScreen());
     },
   };
 }
